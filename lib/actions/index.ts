@@ -2,11 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import Product from "../models/product.model";
-import { generateEmailBody, sendEmail } from "../nodemailer";
 import { User } from "@/types";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
 import { scrapeAmazonProduct } from "../scraper";
 import { connectToDB } from "../mongoose";
+import { generateEmailBody, sendEmail } from "../nodemailer";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
   if (!productUrl) return;
