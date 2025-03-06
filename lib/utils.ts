@@ -1,4 +1,5 @@
 import { PriceHistoryItem, Product } from "@/types";
+import $ from "jquery";
 
 const Notification = {
   WELCOME: "WELCOME",
@@ -28,6 +29,37 @@ export function extractPrice(...elements: any) {
   }
 
   return "";
+}
+
+export function normalizeCategory(categoryText: string) {
+  if (!categoryText) return "";
+
+  return categoryText
+    .split("›") // Split by separator
+    .map((cat) => cat.trim()) // Remove extra spaces
+    .filter((cat) => cat.length > 0) // Remove empty categories
+    .join(" > "); // Join with a better separator
+}
+
+export function normalizeOriginalPrice(priceText: string) {
+  const match = priceText.match(/[\d,]+(\.\d{1,2})?/);
+  return match ? parseFloat(match[0].replace(/,/g, "")) : 0;
+}
+
+export function normalizeStars(starsText: string) {
+  const match = starsText.match(/(\d+(\.\d+)?)/);
+  return match ? `${match[0]} / 5` : "";
+}
+
+export function extractFeatures($: any) {
+  return $("#feature-bullets ul li .a-list-item")
+    .map((_: any, el: any) => $(el).text().trim().replace(/\s+/g, " "))
+    .get();
+}
+export function normalizeReviewsCount(reviewsText: string) {
+  const match = reviewsText.match(/[\d,]+/); // Match full number (including commas)
+  const number = match ? parseInt(match[0].replace(/,/g, ""), 10) : 0; // Convert to number
+  return `${number.toLocaleString()} Reviews`; // Format with commas
 }
 
 // Extracts and returns the currency symbol from an element.

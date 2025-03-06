@@ -59,9 +59,9 @@ const ProductDetails = async ({ params }: Awaited<Props>) => {
                   height={20}
                 />
 
-                <p className="text-base font-semibold text-[#D46F77]">
+                {/* <p className="text-base font-semibold text-[#D46F77]">
                   {product.reviewsCount}
-                </p>
+                </p> */}
               </div>
 
               <div className="p-2 bg-white-200 rounded-10">
@@ -89,8 +89,13 @@ const ProductDetails = async ({ params }: Awaited<Props>) => {
               <p className="text-[34px] text-secondary font-bold">
                 {product.currency} {formatNumber(product.currentPrice)}
               </p>
-              <p className="text-[21px] text-black opacity-50 line-through">
-                {product.currency} {formatNumber(product.originalPrice)}
+              <p className="">
+                <span className="text-[21px] text-black opacity-50 line-through">
+                  {product.currency} {formatNumber(product.originalPrice)}
+                </span>{" "}
+                <span className="text-primary-green font-bold text-sm opacity-70">
+                  {product.discountRate}% OFF
+                </span>
               </p>
             </div>
 
@@ -104,7 +109,7 @@ const ProductDetails = async ({ params }: Awaited<Props>) => {
                     height={16}
                   />
                   <p className="text-sm text-primary-orange font-semibold">
-                    {product.stars || "25"}
+                    {product.stars}
                   </p>
                 </div>
 
@@ -116,15 +121,10 @@ const ProductDetails = async ({ params }: Awaited<Props>) => {
                     height={16}
                   />
                   <p className="text-sm text-secondary font-semibold">
-                    {product.reviewsCount} Reviews
+                    {product.reviewsCount}
                   </p>
                 </div>
               </div>
-
-              <p className="text-sm text-black opacity-50">
-                <span className="text-primary-green font-semibold">93% </span>{" "}
-                of buyers have recommeded this.
-              </p>
             </div>
           </div>
 
@@ -171,8 +171,12 @@ const ProductDetails = async ({ params }: Awaited<Props>) => {
             Product Description
           </h3>
 
-          <div className="flex flex-col gap-4">
-            {product?.description?.split("\n")}
+          <div className="flex flex-col gap-2">
+            <ul className="list-disc">
+              {product?.description?.split("\n").map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
           </div>
         </div>
 
